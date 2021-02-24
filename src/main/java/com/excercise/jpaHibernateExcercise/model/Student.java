@@ -16,13 +16,19 @@ public class Student {
 
     private int age;
 
+    @OneToOne
+    @JoinColumn(name = "ADDRESS_ID", referencedColumnName = "INCREMENTID")
+    private Address address;
+
     @ManyToMany
     @JoinTable(name = "Student_Course",
-            joinColumns = @JoinColumn(name = "Student_id",referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "course_id",referencedColumnName = "id")
+            joinColumns = @JoinColumn(name = "Student_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id")
     )
     private List<Course> courseList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "bookId")
+    private List<Book> booksList = new ArrayList<>();
 
     public List<Course> getCourseList() {
         return courseList;
@@ -33,6 +39,14 @@ public class Student {
     }
 
     public Student() {
+    }
+
+    public List<Book> getBooksList() {
+        return booksList;
+    }
+
+    public void setBooksList(List<Book> booksList) {
+        this.booksList = booksList;
     }
 
     public Long getId() {
@@ -57,5 +71,17 @@ public class Student {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public void setCourseList(List<Course> courseList) {
+        this.courseList = courseList;
     }
 }
